@@ -9,7 +9,7 @@ routes.addRoute('/books/new', books.new);
 routes.addRoute('/books/:id/show', books.show);
 routes.addRoute('/books/:id/edit', books.edit);
 routes.addRoute('/books/:id/update', books.update);
-routes.addRoute('/books/:id/delete', books.delete);
+routes.addRoute('/books/:id', books.delete);
 
 
 module.exports = routes;

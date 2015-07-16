@@ -2,9 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>new!</title>
+  <title>index!</title>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/public/main.css"/>
 </head>
 <body>
+  <div id="library">
+    <h1>Pamela's Library</h1>
 
+    <button class="show-add-book-form">Add Book</button>
+    <div class="add-book-view-container"></div>
+    <div class="book-list"></div>
+  </div>
+
+  <!-- templates -->
+  <script type="text/template" id="book-template">
+      <ul>
+        <input type="text" class="no-show  edit-cover" value="<%- cover %>"/>
+        <li class="book-list-item cover"<img src="<%- cover %>" alt="book cover"/></li>
+
+        <li class="book-list-item"<a href="/books/{{_id}}"><%- title %></a></li>
+
+        <input type="text" class="no-show edit-author" value="<%- author %>"/>
+        <li class="book-list-item author"><%- author %></li>
+
+        <input type="text" class="no-show edit-publisher" value="<%- publisher%>"/>
+        <li class="book-list-item publisher"><%- publisher %></li>
+
+        <input type="text" class="no-show edit-year" value="<%- year %>"/>
+        <li class="book-list-item year"><%- year %></li>
+
+        <input type="text" class="no-show edit-ibsn" value="<%- ibsn %>"/>
+        <li class="book-list-item ibsn"><%- ibsn %></li>
+
+        <li><button class="delete"><i class="fa fa-times"></i></button></li>
+        <li><button class="edit"><i class="fa fa-pencil"></i></button></li>
+        <li><button class="save no-show">save</button><li>
+      </ul>
+  </script>
+
+  <script type="text/template" id="add-book-form">
+      <form class="add-book">
+        <input type="text" name="title" class="title" placeholder="Title"/>
+        <input type="text" name="author" class="author" placeholder="Author"/>
+        <input type="text" name="publisher" class="publisher" placeholder="Publisher"/>
+        <input type="text" name="year" class="year" placeholder="Year"/>
+        <input type="text" name="ibsn" class="ibsn" placeholder="IBSN"/>
+        <input type="text" name="cover" class="cover" placeholder="Book Cover Image"/>
+        <button type="submit" class="add-book-form-btn">Add Book</button>
+      </form>
+  </script>
+
+  <script src="/public/bundle.js"></script>
 </body>
 </html>

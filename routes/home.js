@@ -7,15 +7,14 @@ var view = require('./views');
 
 module.exports = {
   root: function(req, res, url) {
-    console.log('inside root')
     if (req.method === 'GET') {
       res.setHeader('Content-Type', 'text/html');
-      var template = view.render('home', {});
+      var template = view.render('index', {});
       res.end(template);
     }
   },
   public : function(req, res, url) {
-    fs.readFile('./public/' + req.url, function(err, file) {
+    fs.readFile('.' + req.url, function(err, file) {
       if (err) {
         throw err
       }

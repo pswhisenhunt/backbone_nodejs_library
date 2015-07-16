@@ -59,13 +59,10 @@ var AddBookView = Backbone.View.extend({
     event.preventDefault();
     this.model.save(null, {
       success: function() {
-        console.log('success');
         self.collection.add(self.model);
         self.remove();
       }
     });
-
-    // this.$el.addClass('no-show');
   }
 });
 

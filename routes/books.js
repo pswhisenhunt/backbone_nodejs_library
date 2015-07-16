@@ -1,18 +1,27 @@
 var routes = require('routes')();
 var fs = require('fs');
-var db = require('monk')('localhost/books');
+var db = require('monk')('localhost/library');
 var qs = require('qs');
 var mime = require('mime-types');
 var view = require('./views');
-var library = db.get('books');
+var library = db.get('library');
+
+var HEADERS_ACCEPT_JSON = 'application/json';
 
 module.exports = {
   index: function(req, res, url) {
     if (req.method === 'GET') {
-      library.find({}, function(err, docs) {
-        var template = view.render('books/index', {books: docs});
-        res.end(template);
-      });
+      var isAskingForJSON = req.headers.accept.indexOf(HEADERS_ACCEPT_JSON) !== -1;
+      if (isAskingForJSON) {
+        library.find({}, function(err, docs) {
+            res.write(JSON.stringify(docs))
+            res.end();
+        });
+      } else {
+        var template = view.render('books/index', {});
+        res.write(template.toString())
+        res.end();
+      }
     }
 
     if (req.method === 'POST') {
@@ -23,13 +32,12 @@ module.exports = {
       });
 
       req.on('end', function() {
-        var book = qs.parse(data);
+        var book = JSON.parse(data);
         library.insert(book, function(err, doc) {
           if (err) {
             throw err
           }
-          res.writeHead(302, {'Location': '/books'});
-          res.end();
+          res.end(JSON.stringify(doc));
         });
       })
     }
@@ -79,12 +87,12 @@ module.exports = {
   },
 
   delete: function(req, res, url) {
-    if (req.method === 'POST') {
+    if (req.method === 'DELETE') {
       library.remove({_id: url.params.id}, function(err, doc) {
         if (err) {
           throw err
         }
-        res.writeHead(302, {'Location': '/books'});
+        res.writeHead(200);
         res.end();
       });
     }

@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     browserify: {
       dist: {
         files: {
-          'public/bundle.js': ['client/assets/js/*', '!server/app.js', '!routes/*', '!spec/*']
+          'public/bundle.js': ['client/assets/js/**/*']
         }
       }
     },
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
     // },
     watch: {
       scripts: {
-        files: ['assets/**/*'],
+        files: ['client/assets/**/*'],
         tasks: ['browserify', 'sass']
       }
     }

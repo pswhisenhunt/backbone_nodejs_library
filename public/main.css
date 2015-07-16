@@ -1,3 +1,33 @@
+.no-show {
+  display: none; }
 
+.show {
+  display: block; }
+
+.book-list-item {
+  list-style-type: none;
+  cursor: pointer; }
+
+.editing {
+  width: 200px;
+  height: 25px;
+  font-size: 22px;
+  display: block; }
+
+/* .editing input.edit-author {
+  @include editing;
+}
+.editing input.edit-publisher {
+  @include editing;
+}
+.editing input.edit-year {
+  @include editing;
+}
+.editing input.edit-ibsn {
+  @include editing;
+}
+.editing input.edit-cover{
+  @include editing;
+} */
 
 /*# sourceMappingURL=main.css.map */
