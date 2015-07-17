@@ -17,11 +17,13 @@ var AddBookView = Backbone.View.extend({
     'keyup .year': 'handleKeyupYear',
     'keyup .ibsn': 'handleKeyupIBSN',
     'keyup .cover': 'handleKeyupCover',
-    'click .add-book-form-btn': 'handleClickSave'
+    'click .add-form-btn': 'handleClickSave',
+    'click .cancel-form-btn': 'handleCancel'
   },
 
   initialize: function() {
     this.$el.removeClass('no-show');
+    this.showAddBtn = $('#library').find('.show-add-book-form');
     this.model = new Book();
   },
 
@@ -31,7 +33,7 @@ var AddBookView = Backbone.View.extend({
   },
 
   handleKeyupCover: function(event) {
-    this.model.set('title', event.target.value)
+    this.model.set('cover', event.target.value)
   },
 
   handleKeyupTitle: function(event) {
@@ -60,9 +62,16 @@ var AddBookView = Backbone.View.extend({
     this.model.save(null, {
       success: function() {
         self.collection.add(self.model);
+        self.showAddBtn.removeClass('no-show');
         self.remove();
       }
     });
+  },
+
+  handleCancel: function(event) {
+    event.preventDefault();
+    this.showAddBtn.removeClass('no-show');
+    this.remove();
   }
 });
 

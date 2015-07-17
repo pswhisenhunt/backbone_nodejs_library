@@ -43,24 +43,8 @@ module.exports = {
     }
   },
 
-  new: function(req, res, url) {
-    if (req.method === 'GET') {
-      var template = view.render('books/new', {});
-      res.end(template);
-    };
-  },
-
-  edit: function(req, res, url) {
-    if (req.method === 'GET') {
-      library.findOne({_id: url.params.id}, function(err, doc) {
-        var template = view.render('books/edit', doc);
-        res.end(template);
-      });
-    }
-  },
-
-  update: function(req, res, url) {
-    if (req.method === 'POST') {
+  book: function(req, res, url) {
+    if (req.method === 'PUT') {
       var data = '';
 
       req.on('data', function(chunk) {
@@ -68,33 +52,23 @@ module.exports = {
       });
 
       req.on('end', function() {
-        var book = qs.parse(data);
-        library.update({_id: url.params.id}, function(err, doc) {
-          var template = view.render('books/show', doc);
-          res.end(template);
+        var book = JSON.parse(data);
+        console.log(book);
+        library.update({_id: book._id}, book, function(err, doc) {
+          if (err) {
+            throw err;
+          }
+          res.end(JSON.stringify(doc));
         });
       });
     }
-  },
-
-  show: function(req, res, url) {
-    if (req.method === 'GET') {
-      library.findOne({_id: url.params.id}, function(err, doc) {
-        var template = view.render('books/show', doc);
-        res.end(template);
-      });
-    }
-  },
-
-  delete: function(req, res, url) {
     if (req.method === 'DELETE') {
-      library.remove({_id: url.params.id}, function(err, doc) {
+      library.remove({_id: url.params.id}, function(err) {
         if (err) {
-          throw err
+          throw err;
         }
-        res.writeHead(200);
         res.end();
-      });
+      })
     }
   }
 }

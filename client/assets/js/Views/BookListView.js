@@ -3,13 +3,13 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var BookView = require('./BookView');
 
+
 var BookListView = Backbone.View.extend({
     el: '.book-list',
 
     initialize: function() {
       this.collection.on('reset', this.render, this);
       this.collection.on('add', this.addBook, this);
-      this.collection.listenTo(this.model, 'change', this.render);
       this.collection.fetch({reset: true});
     },
 

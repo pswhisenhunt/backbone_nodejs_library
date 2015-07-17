@@ -1,3 +1,19 @@
+$font-Open-Sans: 'Open Sans Condensed', sans-serif;
+$font-Slabo: 'Slabo 27px', serif;
+
+.library-header {
+  font-family: $font-Slabo;
+  font-size: 44px;
+}
+
+.library-main {
+  padding: 15px;
+
+  background-color: lightblue;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px 2px grey;
+}
+
 .no-show {
   display: none;
 }
@@ -6,9 +22,62 @@
   display: block;
 }
 
+.book-list {
+  margin-left: 10%;
+}
+.book-view {
+  float: left;
+  width: 30%;
+  background-color: white;
+  border: 2px solid grey;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.clearfix {
+  clear: left;
+  overflow: auto;
+}
+
 .book-list-item {
   list-style-type: none;
   cursor: pointer;
+  margin-left: 10%;
+
+  font-family: $font-Slabo;
+  font-size: 16px;
+
+  .title {
+    font-size: 18px;
+  }
+}
+
+.icon {
+  list-style-type: none;
+  display: inline;
+}
+
+.delete {
+  background-color: rgb(234, 122, 122);
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.edit {
+ @extend .delete;
+ background-color: rgb(220, 220, 122);
+}
+
+.save {
+  @extend .delete;
+  background-color: green;
+  color: white;
+}
+
+.cancel {
+  @extend .save;
+  background-color:rgb(92, 92, 200);
 }
 
 .editing {
@@ -18,18 +87,42 @@
   display: block;
 }
 
-/* .editing input.edit-author {
-  @include editing;
+.add-book-view-container {
+  input {
+    border: 3px solid rgb(228, 216, 216);
+    width: 250px;
+    margin: 5px;
+    height: 25px;
+    border-radius: 5px;
+    font-size: 16px;
+  }
 }
-.editing input.edit-publisher {
-  @include editing;
+
+.book-view .input {
+  margin: 8px;
+  padding: 5px;
 }
-.editing input.edit-year {
-  @include editing;
+
+.book-view .cover img {
+  width: 200px;
+  height: 275px;
 }
-.editing input.edit-ibsn {
-  @include editing;
+
+.show-add-book-form {
+  background-color: #333;
+  border: none;
+  width: 100px;
+  color: white;
+  font-size: 18px;
 }
-.editing input.edit-cover{
-  @include editing;
-} */
+
+.add-form-btn {
+  @extend .show-add-book-form;
+  background-color: green;
+}
+
+.cancel-form-btn {
+  @extend .show-add-book-form;
+  background-color: rgb(92, 92, 200);
+  width: 125px;
+}

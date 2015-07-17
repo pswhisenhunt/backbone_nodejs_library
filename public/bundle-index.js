@@ -9,7 +9,7 @@ var BookList = Backbone.Collection.extend({
 
 module.exports = BookList;
 
-},{"../Models/Book":2,"backbone":9}],2:[function(require,module,exports){
+},{"../Models/Book":2,"backbone":8}],2:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -29,7 +29,7 @@ var Book = Backbone.Model.extend({
 
 module.exports = Book;
 
-},{"backbone":9,"jquery":11,"underscore":12}],3:[function(require,module,exports){
+},{"backbone":8,"jquery":10,"underscore":11}],3:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -49,11 +49,13 @@ var AddBookView = Backbone.View.extend({
     'keyup .year': 'handleKeyupYear',
     'keyup .ibsn': 'handleKeyupIBSN',
     'keyup .cover': 'handleKeyupCover',
-    'click .add-book-form-btn': 'handleClickSave'
+    'click .add-form-btn': 'handleClickSave',
+    'click .cancel-form-btn': 'handleCancel'
   },
 
   initialize: function() {
     this.$el.removeClass('no-show');
+    this.showAddBtn = $('#library').find('.show-add-book-form');
     this.model = new Book();
   },
 
@@ -63,7 +65,7 @@ var AddBookView = Backbone.View.extend({
   },
 
   handleKeyupCover: function(event) {
-    this.model.set('title', event.target.value)
+    this.model.set('cover', event.target.value)
   },
 
   handleKeyupTitle: function(event) {
@@ -92,15 +94,22 @@ var AddBookView = Backbone.View.extend({
     this.model.save(null, {
       success: function() {
         self.collection.add(self.model);
+        self.showAddBtn.removeClass('no-show');
         self.remove();
       }
     });
+  },
+
+  handleCancel: function(event) {
+    event.preventDefault();
+    this.showAddBtn.removeClass('no-show');
+    this.remove();
   }
 });
 
 module.exports = AddBookView;
 
-},{"../Models/Book":2,"./BookListView":5,"./BookView":7,"backbone":9,"jquery":11,"underscore":12}],4:[function(require,module,exports){
+},{"../Models/Book":2,"./BookListView":5,"./BookView":6,"backbone":8,"jquery":10,"underscore":11}],4:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -113,7 +122,12 @@ var AppView = Backbone.View.extend({
     'click .show-add-book-form': 'addBookForm'
   },
 
+  initialize: function() {
+    this.showAddBtn = $('.show-add-book-form');
+  },
+
   addBookForm: function() {
+    this.showAddBtn.addClass('no-show');
     var addbookview = new AddBookView({collection: this.collection});
     this.$el.find('.add-book-view-container').append(addbookview.render().el);
   }
@@ -122,7 +136,7 @@ var AppView = Backbone.View.extend({
 
 module.exports = AppView;
 
-},{"./AddBookView":3,"backbone":9,"jquery":11,"underscore":12}],5:[function(require,module,exports){
+},{"./AddBookView":3,"backbone":8,"jquery":10,"underscore":11}],5:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -154,41 +168,12 @@ var BookListView = Backbone.View.extend({
 
 module.exports = BookListView;
 
-},{"./BookView":7,"backbone":9,"jquery":11,"underscore":12}],6:[function(require,module,exports){
+},{"./BookView":6,"backbone":8,"jquery":10,"underscore":11}],6:[function(require,module,exports){
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 
-var BookPageView = Backbone.View.extend({
-  tagName: 'section',
-
-  template: _.template($('#book-page-view').html()),
-
-  events: {
-
-  },
-
-  initialize: function() {
-    console.log('inside init');
-    console.log(this.model);
-    this.model.on('change', this.render, this);
-  },
-
-  render: function() {
-    this.$el.html(this.template(this.model.toJSON()));
-    return this;
-  }
-});
-
-
-module.exports = BookPageView;
-
-},{"backbone":9,"jquery":11,"underscore":12}],7:[function(require,module,exports){
-var $ = require('jquery');
-var _ = require('underscore');
-var Backbone = require('backbone');
-
-var BookView = Backbone.View.extend({  
+var BookView = Backbone.View.extend({
   className: 'book-view',
 
   template: _.template($('#book-template').html()),
@@ -196,7 +181,8 @@ var BookView = Backbone.View.extend({
   events: {
     'click .delete': 'delete',
     'click .edit' : 'handleEditEvent',
-    'click .save' : 'handleClickSave'
+    'click .save' : 'handleClickSave',
+    'click .cancel': 'handleClickCancel'
   },
 
   initialize: function() {
@@ -207,8 +193,10 @@ var BookView = Backbone.View.extend({
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));
     this.li = this.$('.book-list-item');
-    this.input = this.$('.no-show');
+    this.input = this.$('.input');
     this.saveBtn = this.$('.save');
+    this.cancelBtn = this.$('.cancel');
+    this.title = this.$('.edit-title');
     this.author = this.$('.edit-author');
     this.publisher = this.$('.edit-publisher');
     this.year = this.$('.edit-year');
@@ -227,12 +215,13 @@ var BookView = Backbone.View.extend({
     this.input.removeClass('no-show');
     this.input.addClass('editing');
     this.saveBtn.removeClass('no-show');
+    this.cancelBtn.removeClass('no-show');
   },
 
   handleClickSave: function(event) {
     this.model.set({
       _id: this.model.id,
-      title: this.model.attributes.title,
+      title: this.title.val(),
       publisher: this.publisher.val(),
       author: this.author.val(),
       ibsn: this.ibsn.val(),
@@ -247,26 +236,35 @@ var BookView = Backbone.View.extend({
         self.input.addClass('no-show');
         this.input.removeClass('editing');
         this.saveBtn.addClass('no-show');
+        this.cancelBtn.addClass('no-show');
       }
     });
+  },
+
+  handleClickCancel: function(event) {
+    event.preventDefault();
+    this.li.removeClass('no-show');
+    this.input.addClass('no-show');
+    this.input.removeClass('editing');
+    this.saveBtn.addClass('no-show');
+    this.cancelBtn.addClass('no-show');
   }
 });
 
 module.exports = BookView;
 
-},{"backbone":9,"jquery":11,"underscore":12}],8:[function(require,module,exports){
+},{"backbone":8,"jquery":10,"underscore":11}],7:[function(require,module,exports){
 var BookList = require('./Collections/BookList');
 var BookView = require('./Views/BookView');
 var BookListView = require('./Views/BookListView');
 var Book = require('./Models/Book');
 var AppView = require('./Views/AppView');
-var BookPageView = require('./Views/BookPageView');
 
 var bookList = new BookList();
 var bookListView = new BookListView({collection: bookList});
 var appView = new AppView({collection: bookList});
 
-},{"./Collections/BookList":1,"./Models/Book":2,"./Views/AppView":4,"./Views/BookListView":5,"./Views/BookPageView":6,"./Views/BookView":7}],9:[function(require,module,exports){
+},{"./Collections/BookList":1,"./Models/Book":2,"./Views/AppView":4,"./Views/BookListView":5,"./Views/BookView":6}],8:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.1
 
@@ -2143,7 +2141,7 @@ var appView = new AppView({collection: bookList});
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":11,"underscore":10}],10:[function(require,module,exports){
+},{"jquery":10,"underscore":9}],9:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -3693,7 +3691,7 @@ var appView = new AppView({collection: bookList});
   }
 }.call(this));
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -12905,6 +12903,6 @@ return jQuery;
 
 }));
 
-},{}],12:[function(require,module,exports){
-arguments[4][10][0].apply(exports,arguments)
-},{"dup":10}]},{},[1,2,3,4,5,6,7,8]);
+},{}],11:[function(require,module,exports){
+arguments[4][9][0].apply(exports,arguments)
+},{"dup":9}]},{},[7]);

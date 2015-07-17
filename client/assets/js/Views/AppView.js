@@ -10,7 +10,12 @@ var AppView = Backbone.View.extend({
     'click .show-add-book-form': 'addBookForm'
   },
 
+  initialize: function() {
+    this.showAddBtn = $('.show-add-book-form');
+  },
+
   addBookForm: function() {
+    this.showAddBtn.addClass('no-show');
     var addbookview = new AddBookView({collection: this.collection});
     this.$el.find('.add-book-view-container').append(addbookview.render().el);
   }
