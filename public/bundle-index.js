@@ -3,8 +3,29 @@ var Book = require('../Models/Book');
 var Backbone = require('backbone');
 
 var BookList = Backbone.Collection.extend({
+  initialize: function() {
+    this.searchQuery = '';
+  },
   model: Book,
-  url: '/books'
+  url: '/books',
+  getModels: function() {
+    var models = [];
+    if (this.searchQuery === '') {
+      return this.models
+    } else {
+      for (var i = 0; i < this.models.length; i++) {
+        if(this.models[i].get('author') === this.searchQuery) {
+          models.push()
+        }
+      }
+    }
+    return models;
+    // loop over models to see what searchQuery matches and return those models
+  },
+  setSearchQuery: function(searchQuery) {
+    this.searchQuery = searchQuery;
+    this.trigger('change');
+  }
 });
 
 module.exports = BookList;
@@ -55,6 +76,7 @@ var AddBookView = Backbone.View.extend({
 
   initialize: function() {
     this.$el.removeClass('no-show');
+    this.$error = $('#library').find('.error');
     this.showAddBtn = $('#library').find('.show-add-book-form');
     this.model = new Book();
   },
@@ -91,18 +113,34 @@ var AddBookView = Backbone.View.extend({
   handleClickSave: function(event) {
     var self = this;
     event.preventDefault();
-    this.model.save(null, {
-      success: function() {
-        self.collection.add(self.model);
-        self.showAddBtn.removeClass('no-show');
-        self.remove();
-      }
-    });
+    var ibsn = this.model.attributes.ibsn;
+    if (!ibsn || ibsn === 0) {
+      this.$error[0].innerHTML = 'You must have an IBSN to add a book.'
+      this.$error.removeClass('no-show');
+    } else {
+      this.$error[0].innerHTML = '';
+      this.$error.addClass('no-show');
+      this.model.save(null, {
+        success: function() {
+          self.collection.add(self.model);
+          self.showAddBtn.removeClass('no-show');
+          self.$error[0].innerHTML = '';
+          self.$error.addClass('no-show');
+          self.remove();
+        },
+        error: function() {
+          self.$error[0].innerHTML = 'A book with that IBSN already exist in the library';
+          self.$error.removeClass('no-show');
+        }
+      });
+    }
   },
 
   handleCancel: function(event) {
     event.preventDefault();
     this.showAddBtn.removeClass('no-show');
+    this.$error[0].innerHTML = '';
+    this.$error.addClass('no-show');
     this.remove();
   }
 });
@@ -131,6 +169,8 @@ var AppView = Backbone.View.extend({
     var addbookview = new AddBookView({collection: this.collection});
     this.$el.find('.add-book-view-container').append(addbookview.render().el);
   }
+
+  // handleKeyUpOfSearch: -> set the serach on the collection
 });
 
 
@@ -147,16 +187,21 @@ var BookListView = Backbone.View.extend({
     el: '.book-list',
 
     initialize: function() {
-      this.collection.on('reset', this.render, this);
+      this.collection.on('reset change', this.render, this);
       this.collection.on('add', this.addBook, this);
       this.collection.fetch({reset: true});
     },
 
     render: function() {
-      this.collection.each(function(book) {
-        var bookView = new BookView({model: book });
-        this.$el.append(bookView.render().el);
-      }, this)
+      var models = this.collection.getModels();
+      if(models.length === 0) {
+        this.$el.append('No search results');
+      } else {
+        for (var i = 0; i < models.length; i++) {
+          var bookView = new BookView({model: models[i] });
+          this.$el.append(bookView.render().el);
+        }
+      }
       return this;
     },
 

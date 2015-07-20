@@ -33,14 +33,20 @@ module.exports = {
 
       req.on('end', function() {
         var book = JSON.parse(data);
-        library.insert(book, function(err, doc) {
-          if (err) {
-            throw err
+        library.findOne({ibsn: book.ibsn}, function(err, doc) {
+          if (doc) {
+            res.end();
+          } else {
+            library.insert(book, function(err, doc) {
+              if (err) {
+                throw err
+              }
+              res.end(JSON.stringify(doc));
+            });
           }
-          res.end(JSON.stringify(doc));
         });
-      })
-    }
+      });
+    };
   },
 
   book: function(req, res, url) {

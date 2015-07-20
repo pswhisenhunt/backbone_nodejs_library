@@ -8,16 +8,21 @@ var BookListView = Backbone.View.extend({
     el: '.book-list',
 
     initialize: function() {
-      this.collection.on('reset', this.render, this);
+      this.collection.on('reset change', this.render, this);
       this.collection.on('add', this.addBook, this);
       this.collection.fetch({reset: true});
     },
 
     render: function() {
-      this.collection.each(function(book) {
-        var bookView = new BookView({model: book });
-        this.$el.append(bookView.render().el);
-      }, this)
+      var models = this.collection.getModels();
+      if(models.length === 0) {
+        this.$el.append('No search results');
+      } else {
+        for (var i = 0; i < models.length; i++) {
+          var bookView = new BookView({model: models[i] });
+          this.$el.append(bookView.render().el);
+        }
+      }
       return this;
     },
 

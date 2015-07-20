@@ -19,6 +19,8 @@ var AppView = Backbone.View.extend({
     var addbookview = new AddBookView({collection: this.collection});
     this.$el.find('.add-book-view-container').append(addbookview.render().el);
   }
+
+  // handleKeyUpOfSearch: -> set the serach on the collection
 });
 
 
