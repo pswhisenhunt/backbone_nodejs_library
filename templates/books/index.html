@@ -13,6 +13,8 @@
     <main class="library-main">
       <button class="show-add-book-form">Add Book</button>
       <div class="error no-show"></div>
+      <div class="add-book-view-container"></div>
+
       <fieldset class="sort-panel">
         <legend>Sort By:</legend>
         <button class="sort-by-author">Author</button>
@@ -21,18 +23,18 @@
       </fieldset>
       <fieldset class="filter-panel">
         <legend>Filter By:</legend>
-          <label for="author">Author</label>
+          <label for="author">Author:</label>
           <input type="text" id="author" class="filter-by-author"/>
 
-          <label for="publisher">Publisher</label>
+          <label for="publisher">Publisher:</label>
           <input type="text" id="publisher" class="filter-by-publisher"/>
 
-          <label for="title">Title</label>
+          <label for="title">Title:</label>
           <input type="text" id="title" class="filter-by-title"/>
 
           <input type="submit" class="reset-filter" value="reset"/>
       </fieldset>
-      <div class="add-book-view-container"></div>
+
       <div class="book-list"></div>
       <div class="clearfix"></div>
     </main>

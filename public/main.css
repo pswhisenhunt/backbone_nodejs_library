@@ -8,6 +8,60 @@
   border-radius: 10px;
   box-shadow: 1px 1px 2px 2px grey; }
 
+.sort-panel, .filter-panel {
+  margin: 0 auto;
+  width: 30%;
+  padding: 10px;
+  margin-top: 10px;
+  font-family: "Slabo 27px", serif;
+  border: 1px solid white; }
+
+.sort-panel legend, .filter-panel legend {
+  color: #716969;
+  font-size: 22px; }
+
+.sort-by-author, .sort-by-title, .sort-by-year {
+  width: 75px;
+  margin-left: 40px;
+  background-color: #c473c1;
+  border: none;
+  font-size: 20px;
+  color: white;
+  font-family: "Slabo 27px", serif; }
+
+.sort-by-title {
+  background-color: #5ca45c; }
+
+.sort-by-year {
+  background-color: #c9c943; }
+
+.filter-panel {
+  width: 80%;
+  margin-left: 155px;
+  border: 1px solid #dedddd; }
+
+.filter-panel label {
+  margin-left: 50px;
+  margin-right: 10px;
+  font-size: 22px; }
+
+.filter-by-author, .filter-by-title, .filter-by-publisher {
+  width: 200px;
+  height: 25px;
+  margin-right: 10px;
+  background-color: azure;
+  font-family: "Slabo 27px", serif;
+  font-size: 18px; }
+
+.reset-filter {
+  width: 55px;
+  border: none;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  background-color: black; }
+
 .no-show {
   display: none; }
 
@@ -52,7 +106,7 @@
   background-color: #dcdc7a; }
 
 .save, .cancel {
-  background-color: green;
+  background-color: #5ca45c;
   color: white; }
 
 .cancel {
@@ -88,7 +142,7 @@
   font-size: 18px; }
 
 .add-form-btn {
-  background-color: green; }
+  background-color: #5ca45c; }
 
 .cancel-form-btn {
   background-color: #5c5cc8;
