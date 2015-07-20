@@ -10,6 +10,7 @@ var BookListView = Backbone.View.extend({
     initialize: function() {
       this.collection.on('reset change', this.render, this);
       this.collection.on('add', this.addBook, this);
+      this.collection.on('sort', this.render, this);
       this.collection.fetch({reset: true});
     },
 

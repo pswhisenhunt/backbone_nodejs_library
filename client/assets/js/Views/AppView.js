@@ -9,7 +9,12 @@ var AppView = Backbone.View.extend({
   events: {
     'click .show-add-book-form': 'addBookForm',
     'keydown .filter-by-author': 'handleFilterByAuthor',
-    'click .reset-filter': 'handleResetFilter'
+    'keydown .filter-by-publisher': 'handleFilterByPublisher',
+    'keydown .filter-by-title': 'handleFilterByTitle',
+    'click .reset-filter': 'handleResetFilter',
+    'click .sort-by-year': 'handleSortByYear',
+    'click .sort-by-author' : 'handleSortByAuthor',
+    'click .sort-by-title': 'handleSortByTitle'
   },
 
   initialize: function() {
@@ -30,8 +35,36 @@ var AppView = Backbone.View.extend({
     }
   },
 
+  handleFilterByPublisher: function(event) {
+    if (event.which === 13) {
+      var searchVal = event.currentTarget.value;
+      var searchAttr = 'publisher';
+      this.collection.setSearchQuery(searchAttr, searchVal);
+    }
+  },
+
+  handleFilterByTitle: function(event) {
+    if (event.which === 13) {
+      var searchVal = event.currentTarget.value;
+      var searchAttr = 'title';
+      this.collection.setSearchQuery(searchAttr, searchVal);
+    }
+  },
+
   handleResetFilter: function() {
     this.collection.setSearchQuery('', '');
+  },
+
+  handleSortByYear: function() {
+    this.collection.setSortQuery('year');
+  },
+
+  handleSortByAuthor: function() {
+    this.collection.setSortQuery('author');
+  },
+
+  handleSortByTitle: function() {
+    this.collection.setSortQuery('title');
   }
 });
 
