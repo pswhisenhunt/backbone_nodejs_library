@@ -7,7 +7,9 @@ var AppView = Backbone.View.extend({
   el: '#library',
 
   events: {
-    'click .show-add-book-form': 'addBookForm'
+    'click .show-add-book-form': 'addBookForm',
+    'keydown .filter-by-author': 'handleFilterByAuthor',
+    'click .reset-filter': 'handleResetFilter'
   },
 
   initialize: function() {
@@ -18,9 +20,19 @@ var AppView = Backbone.View.extend({
     this.showAddBtn.addClass('no-show');
     var addbookview = new AddBookView({collection: this.collection});
     this.$el.find('.add-book-view-container').append(addbookview.render().el);
-  }
+  },
 
-  // handleKeyUpOfSearch: -> set the serach on the collection
+  handleFilterByAuthor: function(event) {
+    if (event.which === 13) {
+      var searchVal = event.currentTarget.value;
+      var searchAttr = 'author';
+      this.collection.setSearchQuery(searchAttr, searchVal);
+    }
+  },
+
+  handleResetFilter: function() {
+    this.collection.setSearchQuery('', '');
+  }
 });
 
 

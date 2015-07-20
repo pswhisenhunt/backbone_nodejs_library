@@ -4,26 +4,27 @@ var Backbone = require('backbone');
 
 var BookList = Backbone.Collection.extend({
   initialize: function() {
-    this.searchQuery = '';
+    this.searchValue = '';
+    this.searchAttribure = ''
   },
   model: Book,
   url: '/books',
   getModels: function() {
     var models = [];
-    if (this.searchQuery === '') {
+    if (this.searchValue === '') {
       return this.models
     } else {
       for (var i = 0; i < this.models.length; i++) {
-        if(this.models[i].get('author') === this.searchQuery) {
-          models.push()
+        if(this.models[i].get(this.searchAttribure).toLowerCase() === this.searchValue.toLowerCase()) {
+          models.push(this.models[i]);
         }
       }
     }
     return models;
-    // loop over models to see what searchQuery matches and return those models
   },
-  setSearchQuery: function(searchQuery) {
-    this.searchQuery = searchQuery;
+  setSearchQuery: function(attr, val) {
+    this.searchAttribure = attr;
+    this.searchValue = val;
     this.trigger('change');
   }
 });
@@ -157,7 +158,9 @@ var AppView = Backbone.View.extend({
   el: '#library',
 
   events: {
-    'click .show-add-book-form': 'addBookForm'
+    'click .show-add-book-form': 'addBookForm',
+    'keydown .filter-by-author': 'handleFilterByAuthor',
+    'click .reset-filter': 'handleResetFilter'
   },
 
   initialize: function() {
@@ -168,9 +171,19 @@ var AppView = Backbone.View.extend({
     this.showAddBtn.addClass('no-show');
     var addbookview = new AddBookView({collection: this.collection});
     this.$el.find('.add-book-view-container').append(addbookview.render().el);
-  }
+  },
 
-  // handleKeyUpOfSearch: -> set the serach on the collection
+  handleFilterByAuthor: function(event) {
+    if (event.which === 13) {
+      var searchVal = event.currentTarget.value;
+      var searchAttr = 'author';
+      this.collection.setSearchQuery(searchAttr, searchVal);
+    }
+  },
+
+  handleResetFilter: function() {
+    this.collection.setSearchQuery('', '');
+  }
 });
 
 
@@ -193,6 +206,7 @@ var BookListView = Backbone.View.extend({
     },
 
     render: function() {
+      this.$el.empty();
       var models = this.collection.getModels();
       if(models.length === 0) {
         this.$el.append('No search results');

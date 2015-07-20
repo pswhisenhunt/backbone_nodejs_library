@@ -3,26 +3,27 @@ var Backbone = require('backbone');
 
 var BookList = Backbone.Collection.extend({
   initialize: function() {
-    this.searchQuery = '';
+    this.searchValue = '';
+    this.searchAttribure = ''
   },
   model: Book,
   url: '/books',
   getModels: function() {
     var models = [];
-    if (this.searchQuery === '') {
+    if (this.searchValue === '') {
       return this.models
     } else {
       for (var i = 0; i < this.models.length; i++) {
-        if(this.models[i].get('author') === this.searchQuery) {
-          models.push()
+        if(this.models[i].get(this.searchAttribure).toLowerCase() === this.searchValue.toLowerCase()) {
+          models.push(this.models[i]);
         }
       }
     }
     return models;
-    // loop over models to see what searchQuery matches and return those models
   },
-  setSearchQuery: function(searchQuery) {
-    this.searchQuery = searchQuery;
+  setSearchQuery: function(attr, val) {
+    this.searchAttribure = attr;
+    this.searchValue = val;
     this.trigger('change');
   }
 });

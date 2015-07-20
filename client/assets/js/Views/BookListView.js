@@ -14,6 +14,7 @@ var BookListView = Backbone.View.extend({
     },
 
     render: function() {
+      this.$el.empty();
       var models = this.collection.getModels();
       if(models.length === 0) {
         this.$el.append('No search results');
