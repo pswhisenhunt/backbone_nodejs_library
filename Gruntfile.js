@@ -14,10 +14,6 @@ module.exports = function(grunt) {
         }
       }
     },
-    // jasmine: {
-    //   src: 'assets/js/*',
-    //   specs: 'spec/spec.js'
-    // },
     watch: {
       scripts: {
         files: ['client/assets/**/*'],
@@ -29,8 +25,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  // grunt.loadNpmTasks('grunt-jasmine-runner');
-
+  
   grunt.registerTask('default', ['browserify', 'sass', 'watch']);
 
 }
