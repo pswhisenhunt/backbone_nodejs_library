@@ -7,14 +7,14 @@ This is a basic library app I built to help me learn Backbone.js, Grunt, Browser
 
 The app's functionality includes:
 1. Adding a book with validation
-  * A book must have an IBSN number to be added to the library
-  * Books cannot have the same IBSN number.
+ - A book must have an IBSN number to be added to the library
+ - Books cannot have the same IBSN number.
 2. Editing a book
 3. Deleting a book
 4. Sorting the book collection by either year, author, or title
 5. Search the book collection by either author, title, or publisher
-  * The search is a partial search, not just exact. For instance,
-    searching 'jane' will return all books in the collection by 'Jane Austen'.
+- The search is a partial search, not just exact. For instance,
+- searching 'jane' will return all books in the collection by 'Jane Austen'.
 
 
 Editing a book:
