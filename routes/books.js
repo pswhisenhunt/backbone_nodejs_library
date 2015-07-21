@@ -5,6 +5,7 @@ var qs = require('qs');
 var mime = require('mime-types');
 var view = require('./views');
 var library = db.get('library');
+var Books = require('../Objects/Book');
 
 var HEADERS_ACCEPT_JSON = 'application/json';
 
@@ -13,9 +14,9 @@ module.exports = {
     if (req.method === 'GET') {
       var isAskingForJSON = req.headers.accept.indexOf(HEADERS_ACCEPT_JSON) !== -1;
       if (isAskingForJSON) {
-        library.find({}, function(err, docs) {
-            res.write(JSON.stringify(docs))
-            res.end();
+        var books = Books.all(function(books){
+          res.write(JSON.stringify(books));
+          res.end();
         });
       } else {
         var template = view.render('books/index', {});
@@ -26,23 +27,17 @@ module.exports = {
 
     if (req.method === 'POST') {
       var data = '';
-
       req.on('data', function(chunk) {
         data += chunk
       });
-
       req.on('end', function() {
         var book = JSON.parse(data);
-        library.findOne({ibsn: book.ibsn}, function(err, doc) {
-          if (doc) {
+        Books.create(book, function(newBook) {
+          if (newBook) {
+            res.end(JSON.stringify(newBook));
+          }
+          else {
             res.end();
-          } else {
-            library.insert(book, function(err, doc) {
-              if (err) {
-                throw err
-              }
-              res.end(JSON.stringify(doc));
-            });
           }
         });
       });
@@ -52,29 +47,23 @@ module.exports = {
   book: function(req, res, url) {
     if (req.method === 'PUT') {
       var data = '';
-
       req.on('data', function(chunk) {
         data += chunk;
       });
-
       req.on('end', function() {
         var book = JSON.parse(data);
-        console.log(book);
-        library.update({_id: book._id}, book, function(err, doc) {
-          if (err) {
-            throw err;
-          }
-          res.end(JSON.stringify(doc));
+        Books.edit(book, function(updatedBook) {
+          res.end(JSON.stringify(updatedBook));
         });
       });
     }
     if (req.method === 'DELETE') {
-      library.remove({_id: url.params.id}, function(err) {
-        if (err) {
-          throw err;
+      var id = url.params.id;
+      Books.delete(id, function(success) {
+        if (success) {
+          res.end();
         }
-        res.end();
-      })
+      });
     }
   }
 }
