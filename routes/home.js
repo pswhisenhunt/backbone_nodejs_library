@@ -1,7 +1,5 @@
 var routes = require('routes')();
 var fs = require('fs');
-var db = require('monk')('localhost/books');
-var qs = require('qs');
 var mime = require('mime-types');
 var view = require('./views');
 
@@ -9,7 +7,7 @@ module.exports = {
   root: function(req, res, url) {
     if (req.method === 'GET') {
       res.setHeader('Content-Type', 'text/html');
-      var template = view.render('index', {});
+      var template = view.render('home', {});
       res.end(template);
     }
   },

@@ -59,24 +59,41 @@ var AppView = Backbone.View.extend({
   },
 
   handleSortByYear: function() {
-    this.sortByYear.addClass('selected');
-    this.sortByAuthor.removeClass('selected');
-    this.sortByTitle.removeClass('selected');
+    this.handleSelected('year');
     this.collection.setSortQuery('year');
   },
 
   handleSortByAuthor: function() {
-    this.sortByYear.removeClass('selected');
-    this.sortByAuthor.addClass('selected');
-    this.sortByTitle.removeClass('selected');
+    this.handleSelected('author');
     this.collection.setSortQuery('author');
   },
 
   handleSortByTitle: function() {
-    this.sortByYear.removeClass('selected');
-    this.sortByAuthor.removeClass('selected');
-    this.sortByTitle.addClass('selected');
+    this.handleSelected('title');
     this.collection.setSortQuery('title');
+  },
+
+  handleSelected: function(currentSelection) {
+    if (currentSelection === 'author') {
+      this.sortByYear.removeClass('selected');
+      this.sortByAuthor.addClass('selected');
+      this.sortByTitle.removeClass('selected');
+    }
+    else if (currentSelection === 'year') {
+      this.sortByYear.addClass('selected');
+      this.sortByAuthor.removeClass('selected');
+      this.sortByTitle.removeClass('selected');
+    }
+    else if (currentSelection === 'title') {
+      this.sortByYear.removeClass('selected');
+      this.sortByAuthor.removeClass('selected');
+      this.sortByTitle.addClass('selected');
+    }
+    else {
+      this.sortByYear.removeClass('selected');
+      this.sortByAuthor.removeClass('selected');
+      this.sortByTitle.remoeveClass('selected');
+    }
   }
 });
 

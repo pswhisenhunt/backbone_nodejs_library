@@ -7,8 +7,11 @@ var BookList = Backbone.Collection.extend({
     this.searchAttribure = '';
     this.sortModelAttributes = '_id';
   },
+
   model: Book,
+
   url: '/books',
+
   getModels: function() {
     var models = [];
     if (this.searchValue === '') {
@@ -42,6 +45,7 @@ var BookList = Backbone.Collection.extend({
       return models;
     }
   },
+
   setSearchQuery: function(attr, val) {
     this.searchAttribure = attr;
     this.searchValue = val.toLowerCase();
