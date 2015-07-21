@@ -1,10 +1,4 @@
-var routes = require('routes')();
-var fs = require('fs');
-var db = require('monk')('localhost/library');
-var qs = require('qs');
-var mime = require('mime-types');
 var view = require('./views');
-var library = db.get('library');
 var Books = require('../Objects/Book');
 
 var HEADERS_ACCEPT_JSON = 'application/json';
