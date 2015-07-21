@@ -19,6 +19,9 @@ var AppView = Backbone.View.extend({
 
   initialize: function() {
     this.showAddBtn = $('.show-add-book-form');
+    this.sortByYear = $('.sort-by-year');
+    this.sortByAuthor = $('.sort-by-author');
+    this.sortByTitle = $('.sort-by-title');
   },
 
   addBookForm: function() {
@@ -56,14 +59,23 @@ var AppView = Backbone.View.extend({
   },
 
   handleSortByYear: function() {
+    this.sortByYear.addClass('selected');
+    this.sortByAuthor.removeClass('selected');
+    this.sortByTitle.removeClass('selected');
     this.collection.setSortQuery('year');
   },
 
   handleSortByAuthor: function() {
+    this.sortByYear.removeClass('selected');
+    this.sortByAuthor.addClass('selected');
+    this.sortByTitle.removeClass('selected');
     this.collection.setSortQuery('author');
   },
 
   handleSortByTitle: function() {
+    this.sortByYear.removeClass('selected');
+    this.sortByAuthor.removeClass('selected');
+    this.sortByTitle.addClass('selected');
     this.collection.setSortQuery('title');
   }
 });

@@ -15,6 +15,12 @@ $color-green: rgb(92, 164, 92);
   box-shadow: 1px 1px 2px 2px grey;
 }
 
+.error {
+  color: rgb(226, 61, 61);
+  font-size: 24px;
+  font-family: $font-Slabo;
+}
+
 .sort-panel {
   margin: 0 auto;
   width: 30%;
@@ -47,6 +53,10 @@ $color-green: rgb(92, 164, 92);
 .sort-by-year {
   @extend .sort-by-author;
   background-color: rgb(201, 201, 67);
+}
+
+.sort-panel .selected {
+  border: 3px solid pink;
 }
 
 .filter-panel {
@@ -99,6 +109,7 @@ $color-green: rgb(92, 164, 92);
   margin-left: 10%;
 }
 .book-view {
+  height: 430px;
   float: left;
   width: 30%;
   background-color: white;
@@ -154,7 +165,7 @@ $color-green: rgb(92, 164, 92);
 }
 
 .editing {
-  width: 200px;
+  width: 300px;
   height: 25px;
   font-size: 22px;
   display: block;
@@ -173,6 +184,7 @@ $color-green: rgb(92, 164, 92);
 
 .book-view .input {
   margin: 8px;
+  margin-left: 0px;
   padding: 5px;
 }
 

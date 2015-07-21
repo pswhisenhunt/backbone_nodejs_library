@@ -8,6 +8,11 @@
   border-radius: 10px;
   box-shadow: 1px 1px 2px 2px grey; }
 
+.error {
+  color: #e23d3d;
+  font-size: 24px;
+  font-family: "Slabo 27px", serif; }
+
 .sort-panel, .filter-panel {
   margin: 0 auto;
   width: 30%;
@@ -34,6 +39,9 @@
 
 .sort-by-year {
   background-color: #c9c943; }
+
+.sort-panel .selected, .filter-panel .selected {
+  border: 3px solid pink; }
 
 .filter-panel {
   width: 80%;
@@ -72,6 +80,7 @@
   margin-left: 10%; }
 
 .book-view {
+  height: 430px;
   float: left;
   width: 30%;
   background-color: white;
@@ -113,7 +122,7 @@
   background-color: #5c5cc8; }
 
 .editing {
-  width: 200px;
+  width: 300px;
   height: 25px;
   font-size: 22px;
   display: block; }
@@ -128,6 +137,7 @@
 
 .book-view .input {
   margin: 8px;
+  margin-left: 0px;
   padding: 5px; }
 
 .book-view .cover img {

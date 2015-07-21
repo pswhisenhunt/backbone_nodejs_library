@@ -16,16 +16,36 @@ var BookList = Backbone.Collection.extend({
       return this.models
     } else {
       for (var i = 0; i < this.models.length; i++) {
-        if(this.models[i].get(this.searchAttribure).toLowerCase() === this.searchValue.toLowerCase()) {
-          models.push(this.models[i]);
+        var modelsValueAtSearchAttribute = this.models[i].get(this.searchAttribure).toLowerCase();
+        if (this.searchValue.indexOf(' ') > -1) {
+          var valSubStrAt = this.searchValue.indexOf(' ');
+        }
+        if (modelsValueAtSearchAttribute.indexOf(' ') > -1) {
+          var modelsSubStrAt = modelsValueAtSearchAttribute.indexOf(' ');
+        }
+
+        if (valSubStrAt && modelsSubStrAt) {
+          if (modelsValueAtSearchAttribute.substring(0, modelsSubStrAt) === this.searchValue.substring(0, valSubStrAt)) {
+            models.push(this.models[i]);
+          }
+        }
+        else if (!valSubStrAt && modelsSubStrAt) {
+          if (this.searchValue === modelsValueAtSearchAttribute.substring(0, modelsSubStrAt)) {
+            models.push(this.models[i]);
+          }
+        }
+        else {
+          if (this.serachValue === modelsValueAtSearchAttribute) {
+            models.push(this.models[i]);
+          }
         }
       }
+      return models;
     }
-    return models;
   },
   setSearchQuery: function(attr, val) {
     this.searchAttribure = attr;
-    this.searchValue = val;
+    this.searchValue = val.toLowerCase();
     this.trigger('change');
   },
 
@@ -188,6 +208,9 @@ var AppView = Backbone.View.extend({
 
   initialize: function() {
     this.showAddBtn = $('.show-add-book-form');
+    this.sortByYear = $('.sort-by-year');
+    this.sortByAuthor = $('.sort-by-author');
+    this.sortByTitle = $('.sort-by-title');
   },
 
   addBookForm: function() {
@@ -225,14 +248,23 @@ var AppView = Backbone.View.extend({
   },
 
   handleSortByYear: function() {
+    this.sortByYear.addClass('selected');
+    this.sortByAuthor.removeClass('selected');
+    this.sortByTitle.removeClass('selected');
     this.collection.setSortQuery('year');
   },
 
   handleSortByAuthor: function() {
+    this.sortByYear.removeClass('selected');
+    this.sortByAuthor.addClass('selected');
+    this.sortByTitle.removeClass('selected');
     this.collection.setSortQuery('author');
   },
 
   handleSortByTitle: function() {
+    this.sortByYear.removeClass('selected');
+    this.sortByAuthor.removeClass('selected');
+    this.sortByTitle.addClass('selected');
     this.collection.setSortQuery('title');
   }
 });
