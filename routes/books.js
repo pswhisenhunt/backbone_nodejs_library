@@ -14,7 +14,7 @@ module.exports = {
     if (req.method === 'GET') {
       var isAskingForJSON = req.headers.accept.indexOf(HEADERS_ACCEPT_JSON) !== -1;
       if (isAskingForJSON) {
-        var books = Books.all(function(books){
+        Books.all(function(books){
           res.write(JSON.stringify(books));
           res.end();
         });
@@ -61,6 +61,9 @@ module.exports = {
       var id = url.params.id;
       Books.delete(id, function(success) {
         if (success) {
+          res.end();
+        }
+        else {
           res.end();
         }
       });
