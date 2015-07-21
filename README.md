@@ -11,13 +11,13 @@ The app's functionality includes:
 2. Editing a book
 3. Deleting a book
 4. Sorting the book collection by either year, author, or title
-5. Search the book collection by either author, title, or publisher. The search is a partial search, not just exact. For instance, searching 'jane' will return all books in the collection by 'Jane Austen'.
+5. Search the book collection by either author, title, or publisher. The search is a partial search. For instance, searching 'jane' will return all books in the collection by 'Jane Austen'.
 
 
 Editing a book:
 ![alt text](https://github.com/pswhisenhunt/backbone_nodejs_library/blob/master/node_bb_lib/book-view.png "Library App - edit")
 
-Sorting the by Author (the currently selected sort has a pink border around it):
+Sorting the by Author (the currently selected sort has a pink border around it so the user can keep track of how the list is sorted):
 ![alt text](https://github.com/pswhisenhunt/backbone_nodejs_library/blob/master/node_bb_lib/sort.png "Library App - sort")
 
 Searching the collection for 'Harry':
