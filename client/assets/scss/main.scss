@@ -9,9 +9,9 @@ $color-green: rgb(92, 164, 92);
 
 .library-main {
   padding: 15px;
+  border-radius: 10px;
 
   background-color: lightblue;
-  border-radius: 10px;
   box-shadow: 1px 1px 2px 2px grey;
 }
 
@@ -26,8 +26,9 @@ $color-green: rgb(92, 164, 92);
   width: 30%;
   padding: 10px;
   margin-top: 10px;
-  font-family: $font-Slabo;
   border: 1px solid white;
+
+  font-family: $font-Slabo;
 }
 
 .sort-panel legend {
@@ -38,8 +39,9 @@ $color-green: rgb(92, 164, 92);
 .sort-by-author {
   width: 75px;
   margin-left: 40px;
-  background-color: rgb(196, 115, 193);
   border: none;
+
+  background-color: rgb(196, 115, 193);
   font-size: 20px;
   color: white;
   font-family: $font-Slabo;
@@ -65,15 +67,18 @@ $color-green: rgb(92, 164, 92);
   margin-left: 155px;
   border: 1px solid rgb(222, 221, 221)
 }
+
 .filter-panel label {
   margin-left: 50px;
   margin-right: 10px;
   font-size: 22px;
 }
+
 .filter-by-author {
   width: 200px;
   height: 25px;
   margin-right: 10px;
+
   background-color: azure;
   font-family: $font-Slabo;
   font-size:18px;
@@ -89,10 +94,11 @@ $color-green: rgb(92, 164, 92);
 
 .reset-filter {
   width: 55px;
-  border: none;
-  font-size: 18px;
   padding: 5px;
+  border: none;
   border-radius: 5px;
+
+  font-size: 18px;
   color: white;
   background-color: black;
 }
@@ -108,14 +114,16 @@ $color-green: rgb(92, 164, 92);
 .book-list {
   margin-left: 10%;
 }
+
 .book-view {
   height: 430px;
   float: left;
   width: 30%;
-  background-color: white;
   border: 2px solid grey;
   border-radius: 10px;
   margin: 5px;
+
+  background-color: white;
 }
 
 .clearfix {
@@ -142,9 +150,10 @@ $color-green: rgb(92, 164, 92);
 }
 
 .delete {
-  background-color: rgb(234, 122, 122);
   border: none;
   border-radius: 3px;
+
+  background-color: rgb(234, 122, 122);
   font-size: 14px;
 }
 
@@ -167,17 +176,19 @@ $color-green: rgb(92, 164, 92);
 .editing {
   width: 300px;
   height: 25px;
-  font-size: 22px;
   display: block;
+
+  font-size: 22px;
 }
 
 .add-book-view-container {
   input {
-    border: 3px solid rgb(228, 216, 216);
     width: 250px;
     margin: 5px;
     height: 25px;
+    border: 3px solid rgb(228, 216, 216);
     border-radius: 5px;
+
     font-size: 16px;
   }
 }
@@ -194,9 +205,10 @@ $color-green: rgb(92, 164, 92);
 }
 
 .show-add-book-form {
-  background-color: #333;
   border: none;
   width: 100px;
+
+  background-color: #333;
   color: white;
   font-size: 18px;
 }
@@ -208,6 +220,7 @@ $color-green: rgb(92, 164, 92);
 
 .cancel-form-btn {
   @extend .show-add-book-form;
-  background-color: rgb(92, 92, 200);
   width: 125px;
+
+  background-color: rgb(92, 92, 200);
 }

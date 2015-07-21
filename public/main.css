@@ -4,8 +4,8 @@
 
 .library-main {
   padding: 15px;
-  background-color: lightblue;
   border-radius: 10px;
+  background-color: lightblue;
   box-shadow: 1px 1px 2px 2px grey; }
 
 .error {
@@ -18,8 +18,8 @@
   width: 30%;
   padding: 10px;
   margin-top: 10px;
-  font-family: "Slabo 27px", serif;
-  border: 1px solid white; }
+  border: 1px solid white;
+  font-family: "Slabo 27px", serif; }
 
 .sort-panel legend, .filter-panel legend {
   color: #716969;
@@ -28,8 +28,8 @@
 .sort-by-author, .sort-by-title, .sort-by-year {
   width: 75px;
   margin-left: 40px;
-  background-color: #c473c1;
   border: none;
+  background-color: #c473c1;
   font-size: 20px;
   color: white;
   font-family: "Slabo 27px", serif; }
@@ -63,10 +63,10 @@
 
 .reset-filter {
   width: 55px;
-  border: none;
-  font-size: 18px;
   padding: 5px;
+  border: none;
   border-radius: 5px;
+  font-size: 18px;
   color: white;
   background-color: black; }
 
@@ -83,10 +83,10 @@
   height: 430px;
   float: left;
   width: 30%;
-  background-color: white;
   border: 2px solid grey;
   border-radius: 10px;
-  margin: 5px; }
+  margin: 5px;
+  background-color: white; }
 
 .clearfix {
   clear: left;
@@ -106,9 +106,9 @@
   display: inline; }
 
 .delete, .edit, .save, .cancel {
-  background-color: #ea7a7a;
   border: none;
   border-radius: 3px;
+  background-color: #ea7a7a;
   font-size: 14px; }
 
 .edit {
@@ -124,14 +124,14 @@
 .editing {
   width: 300px;
   height: 25px;
-  font-size: 22px;
-  display: block; }
+  display: block;
+  font-size: 22px; }
 
 .add-book-view-container input {
-  border: 3px solid #e4d8d8;
   width: 250px;
   margin: 5px;
   height: 25px;
+  border: 3px solid #e4d8d8;
   border-radius: 5px;
   font-size: 16px; }
 
@@ -145,9 +145,9 @@
   height: 275px; }
 
 .show-add-book-form, .add-form-btn, .cancel-form-btn {
-  background-color: #333;
   border: none;
   width: 100px;
+  background-color: #333;
   color: white;
   font-size: 18px; }
 
@@ -155,7 +155,7 @@
   background-color: #5ca45c; }
 
 .cancel-form-btn {
-  background-color: #5c5cc8;
-  width: 125px; }
+  width: 125px;
+  background-color: #5c5cc8; }
 
 /*# sourceMappingURL=main.css.map */
